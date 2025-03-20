@@ -1,0 +1,44 @@
+name: Junie
+
+permissions:
+  contents: write
+  pull-requests: write
+  packages: read
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_type:
+        description: "Type of run"
+        required: true
+      checkout_ref:
+        description: "Checkout reference"
+      issue_body:
+        description: "Body of the issue"
+        required: true
+      issue_title:
+        description: "Title of the issue"
+        required: true
+      issue_id:
+        description: "ID of an issue"
+        required: true
+      upload_logs:
+        description: "Whether to upload logs"
+      use_github_registry:
+        description: "Use GitHub registry"
+      app_token:
+        description: "App's JWT token"
+        required: true
+
+jobs:
+  call-workflow-passing-data:
+    uses: JetBrains/junie-workflows/.github/workflows/ej-issue.yml@main
+    with:
+      run_type: ${{ inputs.run_type }}
+      checkout_ref: ${{ inputs.checkout_ref }}
+      issue_body: ${{ inputs.issue_body }}
+      issue_title: ${{ inputs.issue_title }}
+      issue_id: ${{ inputs.issue_id }}
+      upload_logs: ${{ inputs.upload_logs }}
+      use_github_registry: ${{ inputs.use_github_registry }}
+      app_token: ${{ inputs.app_token }}
